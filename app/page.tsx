@@ -198,10 +198,10 @@ export default function Home() {
               <span className="inline-block mt-1 text-[11px] bg-slate-800 text-slate-300 px-2 py-0.5 rounded">2026 - Planlanan</span>
             </div>
             <div className="border-l-2 border-slate-700 pl-4 space-y-1">
-              <span className="text-xs text-slate-400 font-medium">Lisans Eğitimi</span>
-              <h4 className="font-semibold text-slate-200">Bilgisayar Mühendisliği (7. Dönem)</h4>
+              <span className="text-xs text-teal-400 font-medium">Lisans Eğitimi</span>
+              <h4 className="font-semibold text-slate-200">Bilgisayar Mühendisliği</h4>
               <p className="text-xs text-slate-400">Uluslararası Dublin Üniversitesi</p>
-              <span className="inline-block mt-1 text-[11px] bg-slate-800 text-slate-300 px-2 py-0.5 rounded">Devam Ediyor</span>
+              <span className="inline-block mt-1 text-[11px] bg-teal-500/10 text-teal-400 px-2.5 py-0.5 rounded border border-teal-500/20">Mezun</span>
             </div>
           </div>
         </div>
@@ -219,10 +219,10 @@ export default function Home() {
               </p>
             </div>
             <div className="border-l-2 border-slate-700 pl-4 space-y-1">
-              <span className="text-xs text-slate-400 font-medium">Müzik Kariyeri</span>
-              <h4 className="font-semibold text-slate-200">Profesyonel Davulcu & Eğitmen</h4>
+              <span className="text-xs text-teal-400 font-medium">Müzik Kariyeri</span>
+              <h4 className="font-semibold text-slate-200">Profesyonel Bateri Eğitmeni & Müzisyen</h4>
               <p className="text-xs text-slate-400 leading-relaxed">
-                23 yıllık sahne hayatı, el yapımı asma davul icracılığı ve aktif özel ders eğitmenliği.
+                23 yıllık sahne hayatı, profesyonel bateri icracılığı ve aktif özel ders eğitmenliği.
               </p>
             </div>
           </div>
@@ -265,27 +265,27 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Müzik & Davul Performansları Bölümü */}
+      {/* Müzik & Bateri Performansları Bölümü */}
       <section id="music" className="max-w-5xl mx-auto w-full py-12">
         <h3 className="text-2xl font-bold text-slate-100 mb-2 flex items-center gap-2">
-          <Music className="text-teal-400" size={24} /> Müzik & Davul Performansları
+          <Music className="text-teal-400" size={24} /> Müzik & Bateri Performansları
         </h3>
-        <p className="text-xs text-slate-400 mb-8">23 yıllık sahne deneyimi, el yapımı asma davul icracılığı ve özel ders eğitmenliği.</p>
+        <p className="text-xs text-slate-400 mb-8">23 yıllık sahne deneyimi, profesyonel bateri icracılığı ve özel ders eğitmenliği.</p>
         
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
           <div className="bg-slate-900/60 p-6 rounded-2xl border border-slate-800 space-y-3">
             <span className="text-teal-400 font-bold text-sm flex items-center gap-1.5"><Disc size={16} /> Enstrüman & Konfigürasyon</span>
-            <h4 className="font-bold text-slate-200">El Yapımı Asma Davul & Zil Seti</h4>
+            <h4 className="font-bold text-slate-200">Bateri & Zil Seti Konfigürasyonu</h4>
             <p className="text-xs text-slate-400 leading-relaxed">
-              Ceviz gövdeli el yapımı ceviz asma davul icracılığı. Zil setinde Istanbul Agop (18&quot; Signature Crash, 14&quot; Epoch Hi-Hat, 20&quot; Traditional Crash Ride) ve Istanbul Mehmet Sahra serisi tercihi.
+              Özel konfigürasyon akustiği. Zil setinde Istanbul Agop (18&quot; Signature Crash, 14&quot; Epoch Hi-Hat, 20&quot; Traditional Crash Ride) ve Istanbul Mehmet Sahra serisi tercihi.
             </p>
           </div>
 
           <div className="bg-slate-900/60 p-6 rounded-2xl border border-slate-800 space-y-3">
             <span className="text-teal-400 font-bold text-sm flex items-center gap-1.5"><User size={16} /> Özel Ders & Eğitmenlik</span>
-            <h4 className="font-bold text-slate-200">Davul Eğitmeni</h4>
+            <h4 className="font-bold text-slate-200">Bateri Eğitmeni</h4>
             <p className="text-xs text-slate-400 leading-relaxed">
-              Geleneksel vuruş teknikleri (çırpı vuruşları), ritim teorisi ve pratik uygulama odaklı birebir özel davul eğitmenliği hizmetleri.
+              Ritim teorisi, koordinasyon teknikleri ve pratik uygulama odaklı birebir özel bateri eğitmenliği hizmetleri.
             </p>
           </div>
 
@@ -293,7 +293,7 @@ export default function Home() {
             <span className="text-teal-400 font-bold text-sm flex items-center gap-1.5"><Music size={16} /> Sahne & Akustik</span>
             <h4 className="font-bold text-slate-200">Canlı Performanslar</h4>
             <p className="text-xs text-slate-400 leading-relaxed">
-              Yıllara dayanan sahne geçmişi ile farklı müzik türlerinde profesyonel canlı performanslar ve ritim projeleri.
+              Yıllara dayanan sahne geçmişi ile farklı müzik türlerinde profesyonel canlı bateri performansları.
             </p>
           </div>
         </div>

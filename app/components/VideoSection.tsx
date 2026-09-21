@@ -12,15 +12,15 @@ interface VideoItem {
 
 const videosData: VideoItem[] = [
   {
-    title: "El Yapımı Asma Davul & Ritim İcracılığı",
-    category: "Müzik & Performans",
-    youtubeId: "dQw4w9WgXcQ", // Örnek ID (Kendi YouTube video ID'niz ile değiştirebilirsiniz)
-    description: "Ceviz gövdeli el yapımı asma davul ile geleneksel çırpı vuruşları ve ritim çalışması."
+    title: "Bateri Çalarken Baget Hakkında Önemli Noktalar (Ders 8)",
+    category: "Müzik & Bateri Eğitimi",
+    youtubeId: "-erfGtx4Vi4",
+    description: "Baget seçiminin ziller üzerindeki tını, tuşe ve rezonans etkileri üzerine uygulamalı ders anlatımı."
   },
   {
     title: "Spring Boot & E-Ticaret Entegrasyon Mimarisi",
     category: "Yazılım & Proje",
-    youtubeId: "dQw4w9WgXcQ", // Örnek ID
+    youtubeId: "dQw4w9WgXcQ", // Kendi eklemek istediğin diğer video ID ile güncelleyebilirsin
     description: "Trendyol, Hepsiburada ve Amazon API'leri ile arka planda çalışan senkronizasyon mekanizmaları."
   }
 ];
@@ -35,7 +35,7 @@ export default function VideoSection() {
           <h3 className="text-xl font-bold text-slate-100 flex items-center gap-2">
             <Film className="text-teal-400" size={24} /> Video Galerisi & Performanslar
           </h3>
-          <p className="text-xs text-slate-400 mt-1">Sahne performanslarım, ders kesitlerim ve yazılım projelerimden videolar.</p>
+          <p className="text-xs text-slate-400 mt-1">Sahne performanslarım, bateri dersi kesitlerim ve yazılım projelerimden videolar.</p>
         </div>
       </div>
 
@@ -48,7 +48,6 @@ export default function VideoSection() {
           >
             <div className="space-y-3">
               <div className="relative aspect-video w-full rounded-xl overflow-hidden bg-slate-900 border border-slate-800 flex items-center justify-center">
-                {/* Küçük Önizleme / Poster Alanı */}
                 <div className="absolute inset-0 bg-gradient-to-t from-slate-950/80 via-transparent to-transparent z-10" />
                 <div className="absolute z-20 w-12 h-12 rounded-full bg-teal-500/90 text-slate-950 flex items-center justify-center shadow-lg group-hover:scale-110 transition">
                   <PlaySquare size={24} />
@@ -65,7 +64,6 @@ export default function VideoSection() {
         ))}
       </div>
 
-      {/* Video Oynatma Modalı */}
       {activeVideo && (
         <div className="fixed inset-0 z-50 bg-slate-950/80 backdrop-blur-sm flex items-center justify-center p-4">
           <div className="bg-slate-900 border border-slate-800 w-full max-w-3xl rounded-3xl p-6 relative shadow-2xl space-y-4">
@@ -78,7 +76,7 @@ export default function VideoSection() {
                 onClick={() => setActiveVideo(null)}
                 className="p-2 rounded-full bg-slate-800 hover:bg-slate-700 text-slate-300 transition"
               >
-                <X size={18} />
+                <X size=18 />
               </button>
             </div>
 
