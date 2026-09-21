@@ -1,7 +1,7 @@
 'use client';
 
 import { useState } from 'react';
-import { PlaySquare, Film, X } from 'lucide-react';
+import { PlaySquare, Film, X, ExternalLink } from 'lucide-react';
 
 interface VideoItem {
   title: string;
@@ -12,10 +12,10 @@ interface VideoItem {
 
 const videosData: VideoItem[] = [
   {
-    title: "Bateri Çalarken Baget Hakkında Önemli Noktalar (Ders 8)",
+    title: "Bateri Eğitimi & Teknik Performanslar",
     category: "Müzik & Bateri Eğitimi",
     youtubeId: "-erfGtx4Vi4",
-    description: "Baget seçiminin ziller üzerindeki tını, tuşe ve rezonans etkileri üzerine uygulamalı ders anlatımı."
+    description: "Baget seçimi, tuşe ve rezonans odaklı bateri eğitimi ders serisi ve teknik performans videoları."
   },
   {
     title: "Spring Boot & E-Ticaret Entegrasyon Mimarisi",
@@ -35,8 +35,16 @@ export default function VideoSection() {
           <h3 className="text-xl font-bold text-slate-100 flex items-center gap-2">
             <Film className="text-teal-400" size={24} /> Video Galerisi & Performanslar
           </h3>
-          <p className="text-xs text-slate-400 mt-1">Sahne performanslarım, bateri dersi kesitlerim ve yazılım projelerimden videolar.</p>
+          <p className="text-xs text-slate-400 mt-1">Bateri eğitimi, teknik performans videoları ve yazılım projelerimden kesitler.</p>
         </div>
+        <a 
+          href="https://www.youtube.com/playlist?list=PLbe6QwxW3yZh2zmiZynp31PnTULh7GotB" 
+          target="_blank" 
+          rel="noopener noreferrer"
+          className="flex items-center gap-1.5 text-xs font-semibold bg-teal-500/10 hover:bg-teal-500/20 text-teal-400 px-4 py-2 rounded-xl border border-teal-500/30 transition"
+        >
+          YouTube Oynatma Listesi <ExternalLink size={14} />
+        </a>
       </div>
 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
@@ -76,7 +84,7 @@ export default function VideoSection() {
                 onClick={() => setActiveVideo(null)}
                 className="p-2 rounded-full bg-slate-800 hover:bg-slate-700 text-slate-300 transition"
               >
-                <X size=18 />
+                <X size={18} />
               </button>
             </div>
 
@@ -90,7 +98,17 @@ export default function VideoSection() {
               />
             </div>
 
-            <p className="text-xs text-slate-400">{activeVideo.description}</p>
+            <div className="flex justify-between items-center pt-2">
+              <p className="text-xs text-slate-400">{activeVideo.description}</p>
+              <a 
+                href="https://www.youtube.com/playlist?list=PLbe6QwxW3yZh2zmiZynp31PnTULh7GotB"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-xs text-teal-400 hover:underline flex items-center gap-1 font-medium"
+              >
+                Tüm Listeyi İzle <ExternalLink size={12} />
+              </a>
+            </div>
           </div>
         </div>
       )}
