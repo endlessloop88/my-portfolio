@@ -9,6 +9,7 @@ import ProjectModal from './components/ProjectModal';
 import BlogModal from './components/BlogModal';
 import AlgorithmSection from './components/AlgorithmSection';
 import Metronome from './components/Metronome';
+import VideoSection from './components/VideoSection';
 
 interface Project {
   title: string;
@@ -296,6 +297,11 @@ export default function Home() {
             </p>
           </div>
         </div>
+      </section>
+
+      {/* Video Galerisi Bileşeni */}
+      <section className="max-w-5xl mx-auto w-full py-6">
+        <VideoSection />
       </section>
 
       {/* Blog Bölümü */}
