@@ -1,13 +1,121 @@
----
-title: "Java ve E-Ticaret Entegrasyonlarında Mimari Yaklaşımlar"
-date: "2026-09-21"
-description: "Trendyol, Hepsiburada ve Amazon gibi pazar yerleri ile yürütülen operasyonlarda Spring Boot tabanlı servislerin rolü ve performans optimizasyonları."
----
+<YUNUS İLGUN />
 
-Modern e-ticaret ekosisteminde birden fazla pazar yerini eş zamanlı yönetmek, robust (dayanıklı) arka yüz mimarileri gerektirir. 2010 yılından bu yana edindiğim deneyimlerle, sipariş ve stok senkronizasyonunda karşılaşılan zorlukları ve Java / Spring Boot ikilisinin bu süreçlerdeki gücünü inceliyoruz.
+Hakkımda
+Deneyim & Eğitim
+Projeler
+Müzik
+Blog
+YouTube
+İletişim
 
-### Temel Zorluklar ve Çözümler
+setIsAuthOpen(true)}
+className="bg-primary text-primary-foreground px-4 py-2 rounded-md text-sm font-medium hover:opacity-90 transition-opacity"
 
-1. **Eş Zamanlı İstek Yönetimi (Concurrency):** Stok güncellemelerinin anlık olarak tüm pazar yerlerine yansıtılması.
-2. **Hata Toleransı (Fault Tolerance):** Harici servis kesintilerinde sistemin ayakta kalmasını sağlayan mekanizmalar.
-3. **Veritabanı Optimizasyonu:** Hızlı sorgulama ve hafif veri katmanları ile yanıt sürelerini minimumda tutmak.
+Üye Ol / Giriş
+
+{/* Hero / Hakkımda Bölümü */}
+
+Bilgisayar Mühendisi & Yazılım Geliştirici
+İzmir, Türkiye
+
+Sistemler, Mimarlar ve Ölçeklenebilir Yazılımlar Geliştiriyorum.
+Java teknolojileri, Python, C#, C ve e-ticaret sektöründe aktif olarak çalışmaktayım. E-ticaret pazar yeri operasyonları ve arka yüz yazılım mimarileri geliştirmemin yanı sıra, profesyonel müzik hayatımı yazılım mühendisliği kariyerimle eş zamanlı olarak başarıyla sürdürüyorum.
+
+{/* Deneyim & Eğitim Bölümü */}
+
+Deneyim & Eğitim Geçmişi
+Eğitim Geçmişi
+Bilgisayar Mühendisliği Lisans
+
+Uluslararası Dublin Üniversitesi (7. Dönem)
+
+Profesyonel Uzmanlık
+E-Ticaret Operasyonları & Yazılım
+
+Trendyol, Hepsiburada, Amazon, AliExpress (15+ Yıl)
+
+{/* İnteraktif Müzik Pedi ve Davul Bölümü */}
+
+İnteraktif Müzik & Davul Pedi
+Web Audio API ile güçlendirilmiş dijital enstrüman pedlerini aşağıda deneyimleyebilirsiniz.
+
+{/* Projeler Bölümü */}
+
+Yazılım Projelerim
+{projects.map((project, index) => (
+
+{project.tag}
+
+{project.title}
+{project.description}
+
+{project.techs.map((tech, i) => (
+
+{tech}
+))}
+
+setSelectedProject(project)}
+className="text-sm font-medium text-primary hover:underline text-left"
+
+Detayları İncele →
+
+))}
+
+{/* YouTube / Medya Bölümü */}
+
+YouTube & Medya İçerikleri
+{/* Blog Bölümü */}
+
+Blog Yazıları
+Üye olarak kendi blog yazınızı ekleyebilirsiniz
+
+Henüz yayınlanmış bir blog yazısı bulunmuyor. Üye girişi yaparak ilk yazınızı oluşturabilirsiniz.
+
+setIsAuthOpen(true)}
+className="bg-muted text-foreground px-4 py-2 rounded-md text-sm font-medium hover:bg-muted/80 transition-colors"
+
+Blog Yazmak İçin Giriş Yap
+
+{/* Footer / Sosyal Medya ve Zorunlu Alan */}
+
+Kıdemli Yazılım ve Bilgisayar Mühendisi
+
+GitHub
+LinkedIn
+Instagram
+YouTube
+
+© 2026 Yunus İlgün. Tüm hakları saklıdır.
+
+{/* Proje Detay Modalı */}
+{selectedProject && (
+
+{selectedProject.title}
+{selectedProject.fullDetails}
+
+setSelectedProject(null)}
+className="bg-primary text-primary-foreground px-4 py-2 rounded-md text-sm font-medium w-full"
+
+Kapat
+
+)}
+
+{/* Üye Ol / Giriş Modalı */}
+{isAuthOpen && (
+
+Üye Ol / Giriş Yap
+Blog yazısı paylaşmak ve etkileşimde bulunmak için hesabınıza giriş yapın.
+
+alert("Giriş yapıldı!")}
+className="bg-primary text-primary-foreground px-4 py-2 rounded text-sm font-medium flex-1"
+
+Giriş Yap
+
+setIsAuthOpen(false)}
+className="bg-muted text-foreground px-4 py-2 rounded text-sm font-medium"
+
+İptal
+
+  )}
+);
+}

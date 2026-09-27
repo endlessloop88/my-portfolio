@@ -6,7 +6,7 @@ import { Providers } from "./providers";
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
-  title: "Yunus İlgün | Yazılım Mühendisi & E-Ticaret Uzmanı",
+  title: "Yunus İlgün | Yazılım Mühendisi & Bilgisayar Mühendisi",
   description: "Kişisel portfolyo ve blog web sitesi",
 };
 
