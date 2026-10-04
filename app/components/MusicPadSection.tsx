@@ -1,274 +1,193 @@
-"use client";
+'use client';
 
-import React, { useRef, useState } from 'react';
+import React, { useCallback, useEffect, useRef, useState } from 'react';
 
-type PadType = 'kick' | 'snare' | 'hihat' | 'tom' | 'crash' | 'perc' | 'sub';
-
-interface Pad {
-  id: number;
+interface DrumPad {
+  id: string;
   name: string;
   key: string;
+  file: string; // public/sounds/savannah/ altındaki dosya adı
   color: string;
-  type: PadType;
-  baseFreq: number;
+  chokes?: string[]; // bu pad çalınca susturulacak padlerin id'leri
 }
 
-const pads: Pad[] = [
-  { id: 1, name: "Kick", key: "Q", color: "from-red-600 to-orange-600", type: "kick", baseFreq: 150 },
-  { id: 2, name: "Snare", key: "W", color: "from-blue-600 to-cyan-600", type: "snare", baseFreq: 200 },
-  { id: 3, name: "Hi-Hat", key: "E", color: "from-yellow-500 to-amber-600", type: "hihat", baseFreq: 8000 },
-  { id: 4, name: "Tom 1", key: "A", color: "from-purple-600 to-indigo-600", type: "tom", baseFreq: 220 },
-  { id: 5, name: "Tom 2", key: "S", color: "from-green-600 to-emerald-600", type: "tom", baseFreq: 150 },
-  { id: 6, name: "Crash", key: "D", color: "from-pink-600 to-rose-600", type: "crash", baseFreq: 5000 },
-  { id: 7, name: "Perc 1", key: "Z", color: "from-teal-600 to-cyan-700", type: "perc", baseFreq: 600 },
-  { id: 8, name: "Perc 2", key: "X", color: "from-amber-600 to-orange-700", type: "perc", baseFreq: 900 },
-  { id: 9, name: "Sub 808", key: "C", color: "from-violet-700 to-purple-900", type: "sub", baseFreq: 55 },
+const SOUND_DIR = '/sounds/savannah/';
+
+const drumPads: DrumPad[] = [
+  // Üst sıra: davullar ve hi-hat'ler
+  { id: 'kick', name: 'Kick (22")', key: 'Q', file: 'kick.wav', color: 'from-amber-700 to-amber-900' },
+  { id: 'snare', name: 'Snare', key: 'W', file: 'snare.wav', color: 'from-slate-600 to-slate-800' },
+  { id: 'hihat', name: 'Hi-Hat', key: 'E', file: 'closed-hh.wav', color: 'from-yellow-600 to-amber-700', chokes: ['hihat-open'] },
+  { id: 'hihat-open', name: 'Open Hi-Hat', key: 'Z', file: 'open-hh.wav', color: 'from-yellow-500 to-orange-600' },
+  { id: 'tom1', name: 'Tom 1', key: 'R', file: 'rack-tom-1.wav', color: 'from-blue-700 to-blue-900' },
+  { id: 'tom2', name: 'Tom 2', key: 'T', file: 'rack-tom-2.wav', color: 'from-emerald-700 to-emerald-900' },
+  { id: 'floor-tom', name: 'Floor Tom', key: 'A', file: 'floor-tom.wav', color: 'from-purple-700 to-purple-900' },
+
+  // Alt sıra: ziller
+  { id: 'ride', name: 'Ride Zili', key: 'S', file: 'ride.wav', color: 'from-orange-600 to-amber-800' },
+  { id: 'crash', name: 'Crash Zili', key: 'D', file: 'middle-crash.wav', color: 'from-pink-600 to-rose-700' },
+  { id: 'crash-18', name: 'Crash 18" (Efekt)', key: 'F', file: 'china.wav', color: 'from-cyan-600 to-teal-800' },
+  { id: 'splash', name: 'Splash Zili', key: 'G', file: 'splash.wav', color: 'from-fuchsia-600 to-purple-800' },
+  { id: 'crash-left', name: 'Crash (Sol)', key: 'X', file: 'crash-left.wav', color: 'from-rose-600 to-red-800' },
+  { id: 'crash-right', name: 'Crash (Sağ)', key: 'C', file: 'crash-right.wav', color: 'from-indigo-600 to-blue-800' },
+  { id: 'bell', name: 'Bell', key: 'V', file: 'bell.wav', color: 'from-lime-600 to-green-800' },
 ];
 
-export default function MusicPadSection() {
-  const [activePad, setActivePad] = useState(-1);
-  const ctxRef = useRef<AudioContext | null>(null);
-  const noiseBufferRef = useRef<AudioBuffer | null>(null);
+interface ActiveVoice {
+  source: AudioBufferSourceNode;
+  gain: GainNode;
+}
 
-  const getContext = () => {
+export default function MusicPadSection() {
+  const [activePad, setActivePad] = useState<string | null>(null);
+  const [loaded, setLoaded] = useState(false);
+  const [loadError, setLoadError] = useState(false);
+
+  const ctxRef = useRef<AudioContext | null>(null);
+  const buffersRef = useRef<Map<string, AudioBuffer>>(new Map());
+  const voicesRef = useRef<Map<string, ActiveVoice>>(new Map());
+
+  const getContext = useCallback(() => {
     if (!ctxRef.current) {
       const AudioContextClass =
         window.AudioContext ||
         (window as unknown as { webkitAudioContext: typeof window.AudioContext }).webkitAudioContext;
       ctxRef.current = new AudioContextClass();
     }
-    if (ctxRef.current.state === 'suspended') {
-      ctxRef.current.resume();
-    }
     return ctxRef.current;
-  };
+  }, []);
 
-  const getNoiseBuffer = (ctx: AudioContext) => {
-    if (!noiseBufferRef.current) {
-      const bufferSize = ctx.sampleRate * 2;
-      const buffer = ctx.createBuffer(1, bufferSize, ctx.sampleRate);
-      const data = buffer.getChannelData(0);
-      for (let i = 0; i < bufferSize; i++) {
-        data[i] = Math.random() * 2 - 1;
+  // Sayfa açılınca tüm ses dosyalarını önceden yükle (gecikmesiz çalma için)
+  useEffect(() => {
+    let cancelled = false;
+
+    const loadAll = async () => {
+      try {
+        const ctx = getContext();
+        await Promise.all(
+          drumPads.map(async (pad) => {
+            const res = await fetch(SOUND_DIR + pad.file);
+            if (!res.ok) throw new Error(`${pad.file} bulunamadı`);
+            const data = await res.arrayBuffer();
+            const buffer = await ctx.decodeAudioData(data);
+            buffersRef.current.set(pad.id, buffer);
+          })
+        );
+        if (!cancelled) setLoaded(true);
+      } catch (e) {
+        console.error('Ses dosyaları yüklenemedi:', e);
+        if (!cancelled) setLoadError(true);
       }
-      noiseBufferRef.current = buffer;
-    }
-    return noiseBufferRef.current;
-  };
+    };
 
-  const playKick = (ctx: AudioContext, baseFreq: number) => {
-    const now = ctx.currentTime;
-    const osc = ctx.createOscillator();
-    const gain = ctx.createGain();
+    loadAll();
+    return () => {
+      cancelled = true;
+    };
+  }, [getContext]);
 
-    osc.type = 'sine';
-    osc.frequency.setValueAtTime(baseFreq * 3, now);
-    osc.frequency.exponentialRampToValueAtTime(baseFreq * 0.5, now + 0.35);
-
-    gain.gain.setValueAtTime(1, now);
-    gain.gain.exponentialRampToValueAtTime(0.001, now + 0.4);
-
-    osc.connect(gain);
-    gain.connect(ctx.destination);
-    osc.start(now);
-    osc.stop(now + 0.4);
-
-    // Attack click (transient)
-    const clickOsc = ctx.createOscillator();
-    const clickGain = ctx.createGain();
-    clickOsc.type = 'square';
-    clickOsc.frequency.setValueAtTime(baseFreq * 6, now);
-    clickGain.gain.setValueAtTime(0.4, now);
-    clickGain.gain.exponentialRampToValueAtTime(0.001, now + 0.03);
-    clickOsc.connect(clickGain);
-    clickGain.connect(ctx.destination);
-    clickOsc.start(now);
-    clickOsc.stop(now + 0.03);
-  };
-
-  const playSnare = (ctx: AudioContext) => {
-    const now = ctx.currentTime;
-
-    // Noise body
-    const noise = ctx.createBufferSource();
-    noise.buffer = getNoiseBuffer(ctx);
-    const noiseFilter = ctx.createBiquadFilter();
-    noiseFilter.type = 'bandpass';
-    noiseFilter.frequency.value = 1800;
-    const noiseGain = ctx.createGain();
-    noiseGain.gain.setValueAtTime(0.7, now);
-    noiseGain.gain.exponentialRampToValueAtTime(0.01, now + 0.2);
-
-    noise.connect(noiseFilter);
-    noiseFilter.connect(noiseGain);
-    noiseGain.connect(ctx.destination);
-    noise.start(now);
-    noise.stop(now + 0.2);
-
-    // Tonal body (the "thump")
-    const osc = ctx.createOscillator();
-    const oscGain = ctx.createGain();
-    osc.type = 'triangle';
-    osc.frequency.setValueAtTime(180, now);
-    oscGain.gain.setValueAtTime(0.5, now);
-    oscGain.gain.exponentialRampToValueAtTime(0.01, now + 0.12);
-    osc.connect(oscGain);
-    oscGain.connect(ctx.destination);
-    osc.start(now);
-    osc.stop(now + 0.12);
-  };
-
-  const playHiHat = (ctx: AudioContext, decay = 0.08) => {
-    const now = ctx.currentTime;
-    const noise = ctx.createBufferSource();
-    noise.buffer = getNoiseBuffer(ctx);
-
-    const bandpass = ctx.createBiquadFilter();
-    bandpass.type = 'bandpass';
-    bandpass.frequency.value = 9000;
-
-    const highpass = ctx.createBiquadFilter();
-    highpass.type = 'highpass';
-    highpass.frequency.value = 7000;
-
-    const gain = ctx.createGain();
-    gain.gain.setValueAtTime(0.35, now);
-    gain.gain.exponentialRampToValueAtTime(0.001, now + decay);
-
-    noise.connect(bandpass);
-    bandpass.connect(highpass);
-    highpass.connect(gain);
-    gain.connect(ctx.destination);
-    noise.start(now);
-    noise.stop(now + decay);
-  };
-
-  const playTom = (ctx: AudioContext, baseFreq: number) => {
-    const now = ctx.currentTime;
-    const osc = ctx.createOscillator();
-    const gain = ctx.createGain();
-
-    osc.type = 'sine';
-    osc.frequency.setValueAtTime(baseFreq * 1.5, now);
-    osc.frequency.exponentialRampToValueAtTime(baseFreq * 0.7, now + 0.3);
-
-    gain.gain.setValueAtTime(0.8, now);
-    gain.gain.exponentialRampToValueAtTime(0.001, now + 0.35);
-
-    osc.connect(gain);
-    gain.connect(ctx.destination);
-    osc.start(now);
-    osc.stop(now + 0.35);
-  };
-
-  const playCrash = (ctx: AudioContext) => {
-    const now = ctx.currentTime;
-    const noise = ctx.createBufferSource();
-    noise.buffer = getNoiseBuffer(ctx);
-
-    const highpass = ctx.createBiquadFilter();
-    highpass.type = 'highpass';
-    highpass.frequency.value = 4000;
-
-    const gain = ctx.createGain();
-    gain.gain.setValueAtTime(0.4, now);
-    gain.gain.exponentialRampToValueAtTime(0.001, now + 1.2);
-
-    noise.connect(highpass);
-    highpass.connect(gain);
-    gain.connect(ctx.destination);
-    noise.start(now);
-    noise.stop(now + 1.2);
-  };
-
-  const playPerc = (ctx: AudioContext, baseFreq: number) => {
-    const now = ctx.currentTime;
-    const osc = ctx.createOscillator();
-    const gain = ctx.createGain();
-
-    osc.type = 'sine';
-    osc.frequency.setValueAtTime(baseFreq * 2, now);
-    osc.frequency.exponentialRampToValueAtTime(baseFreq * 0.8, now + 0.15);
-
-    gain.gain.setValueAtTime(0.5, now);
-    gain.gain.exponentialRampToValueAtTime(0.001, now + 0.18);
-
-    osc.connect(gain);
-    gain.connect(ctx.destination);
-    osc.start(now);
-    osc.stop(now + 0.18);
-  };
-
-  const playSub808 = (ctx: AudioContext, baseFreq: number) => {
-    const now = ctx.currentTime;
-    const osc = ctx.createOscillator();
-    const gain = ctx.createGain();
-
-    osc.type = 'sine';
-    osc.frequency.setValueAtTime(baseFreq * 2, now);
-    osc.frequency.exponentialRampToValueAtTime(baseFreq, now + 0.08);
-
-    gain.gain.setValueAtTime(0.9, now);
-    gain.gain.exponentialRampToValueAtTime(0.001, now + 0.8);
-
-    osc.connect(gain);
-    gain.connect(ctx.destination);
-    osc.start(now);
-    osc.stop(now + 0.8);
-  };
-
-  const playSound = (pad: Pad) => {
-    setActivePad(pad.id);
-    setTimeout(() => setActivePad(-1), 150);
+  // Çalan bir sesi tıklama sesi çıkarmadan hızla kıs ve durdur
+  const chokeVoice = useCallback((padId: string) => {
+    const ctx = ctxRef.current;
+    const voice = voicesRef.current.get(padId);
+    if (!ctx || !voice) return;
 
     try {
-      const ctx = getContext();
-      switch (pad.type) {
-        case 'kick':
-          playKick(ctx, pad.baseFreq);
-          break;
-        case 'snare':
-          playSnare(ctx);
-          break;
-        case 'hihat':
-          playHiHat(ctx);
-          break;
-        case 'tom':
-          playTom(ctx, pad.baseFreq);
-          break;
-        case 'crash':
-          playCrash(ctx);
-          break;
-        case 'perc':
-          playPerc(ctx, pad.baseFreq);
-          break;
-        case 'sub':
-          playSub808(ctx, pad.baseFreq);
-          break;
-      }
+      const now = ctx.currentTime;
+      voice.gain.gain.cancelScheduledValues(now);
+      voice.gain.gain.setValueAtTime(voice.gain.gain.value, now);
+      voice.gain.gain.linearRampToValueAtTime(0, now + 0.04);
+      voice.source.stop(now + 0.05);
     } catch {
-      // AudioContext desteklenmeyen durumlar için
+      // ses zaten bitmiş olabilir
     }
-  };
+    voicesRef.current.delete(padId);
+  }, []);
+
+  const playSound = useCallback(
+    (pad: DrumPad) => {
+      setActivePad(pad.id);
+      setTimeout(() => setActivePad(null), 150);
+
+      const buffer = buffersRef.current.get(pad.id);
+      if (!buffer) return;
+
+      try {
+        const ctx = getContext();
+        if (ctx.state === 'suspended') {
+          ctx.resume();
+        }
+
+        // Hi-hat choke: kapalı hi-hat açık olanı susturur
+        pad.chokes?.forEach((id) => chokeVoice(id));
+
+        const source = ctx.createBufferSource();
+        const gain = ctx.createGain();
+        source.buffer = buffer;
+        source.connect(gain);
+        gain.connect(ctx.destination);
+        source.start();
+
+        voicesRef.current.set(pad.id, { source, gain });
+        source.onended = () => {
+          if (voicesRef.current.get(pad.id)?.source === source) {
+            voicesRef.current.delete(pad.id);
+          }
+        };
+      } catch (e) {
+        console.error('Ses çalınamadı:', e);
+      }
+    },
+    [getContext, chokeVoice]
+  );
+
+  // Klavye: Q W E Z R T A / S D F G X C V
+  useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.repeat || e.metaKey || e.ctrlKey || e.altKey) return;
+
+      // Formlara yazarken pedler çalmasın
+      const target = e.target as HTMLElement | null;
+      if (target && (target.tagName === 'INPUT' || target.tagName === 'TEXTAREA' || target.isContentEditable)) {
+        return;
+      }
+
+      const found = drumPads.find((p) => p.key.toLowerCase() === e.key.toLowerCase());
+      if (found) {
+        playSound(found);
+      }
+    };
+    window.addEventListener('keydown', handleKeyDown);
+    return () => window.removeEventListener('keydown', handleKeyDown);
+  }, [playSound]);
 
   return (
-    <section className="mx-auto w-full max-w-3xl p-4">
-      <div className="grid grid-cols-3 gap-3">
-        {pads.map((pad) => (
+    <section className="mx-auto w-full max-w-4xl p-4">
+      <div className="grid grid-cols-2 sm:grid-cols-4 lg:grid-cols-7 gap-3">
+        {drumPads.map((pad) => (
           <button
             key={pad.id}
             type="button"
             onClick={() => playSound(pad)}
-            className={`rounded-xl bg-gradient-to-br ${pad.color} p-6 text-center text-white shadow-lg transition-transform ${
-              activePad === pad.id ? "scale-95 brightness-125" : "hover:scale-[1.02]"
+            disabled={!loaded}
+            className={`rounded-xl bg-gradient-to-br ${pad.color} p-4 text-center text-white shadow-lg transition-transform disabled:opacity-50 ${
+              activePad === pad.id ? 'scale-95 brightness-125' : 'hover:scale-[1.02]'
             }`}
             aria-label={`Play ${pad.name}`}
           >
-            <span className="block text-lg font-bold">{pad.name}</span>
-            <span className="mt-1 block text-sm font-semibold opacity-80">{pad.key}</span>
+            <span className="block text-sm font-bold leading-tight">{pad.name}</span>
+            <span className="mt-1 block text-xs font-semibold opacity-80">{pad.key}</span>
           </button>
         ))}
       </div>
+
+      <p className="mt-4 text-center text-xs text-slate-400">
+        {loadError
+          ? 'Ses dosyaları yüklenemedi. public/sounds/savannah klasörünü kontrol edin.'
+          : loaded
+          ? 'Klavyeden de çalabilirsiniz: Q W E Z R T A / S D F G X C V'
+          : 'Sesler yükleniyor...'}
+      </p>
     </section>
   );
 }
