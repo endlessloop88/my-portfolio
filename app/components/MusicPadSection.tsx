@@ -39,7 +39,7 @@ interface ActiveVoice {
 }
 
 export default function MusicPadSection() {
-  const [activePad, setActivePad] = useState<string | null>(null);
+  const [activePads, setActivePads] = useState<string[]>([]);
   const [loaded, setLoaded] = useState(false);
   const [loadError, setLoadError] = useState(false);
 
@@ -106,8 +106,13 @@ export default function MusicPadSection() {
 
   const playSound = useCallback(
     (pad: DrumPad) => {
-      setActivePad(pad.id);
-      setTimeout(() => setActivePad(null), 150);
+      setActivePads((prev) => [...prev, pad.id]);
+      setTimeout(() => {
+        setActivePads((prev) => {
+          const i = prev.indexOf(pad.id);
+          return i === -1 ? prev : [...prev.slice(0, i), ...prev.slice(i + 1)];
+        });
+      }, 150);
 
       const buffer = buffersRef.current.get(pad.id);
       if (!buffer) return;
@@ -141,6 +146,24 @@ export default function MusicPadSection() {
     [getContext, chokeVoice]
   );
 
+  // iOS/Safari: ses motoru ilk dokunuşun bitişinde açılır
+  useEffect(() => {
+    const unlock = () => {
+      const ctx = getContext();
+      if (ctx.state === 'suspended') {
+        ctx.resume();
+      }
+    };
+    window.addEventListener('pointerup', unlock, { once: true });
+    window.addEventListener('touchend', unlock, { once: true });
+    window.addEventListener('click', unlock, { once: true });
+    return () => {
+      window.removeEventListener('pointerup', unlock);
+      window.removeEventListener('touchend', unlock);
+      window.removeEventListener('click', unlock);
+    };
+  }, [getContext]);
+
   // Klavye: Q W E Z R T A / S D F G X C V
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
@@ -168,10 +191,19 @@ export default function MusicPadSection() {
           <button
             key={pad.id}
             type="button"
-            onClick={() => playSound(pad)}
+            onPointerDown={(e) => {
+              if (e.button !== 0) return; // sağ tık vb. çalmasın
+              e.preventDefault();
+              playSound(pad);
+            }}
+            onClick={(e) => {
+              // Yalnızca klavyeyle (Enter/Space) tetiklenen tıklamalar; dokunma/fare zaten pointerdown ile çalıyor
+              if (e.detail === 0) playSound(pad);
+            }}
+            onContextMenu={(e) => e.preventDefault()}
             disabled={!loaded}
-            className={`rounded-xl bg-gradient-to-br ${pad.color} p-4 text-center text-white shadow-lg transition-transform disabled:opacity-50 ${
-              activePad === pad.id ? 'scale-95 brightness-125' : 'hover:scale-[1.02]'
+            className={`select-none touch-manipulation rounded-xl bg-gradient-to-br ${pad.color} p-4 text-center text-white shadow-lg transition-transform disabled:opacity-50 ${
+              activePads.includes(pad.id) ? 'scale-95 brightness-125' : 'hover:scale-[1.02]'
             }`}
             aria-label={`Play ${pad.name}`}
           >
