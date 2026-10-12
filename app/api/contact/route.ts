@@ -15,8 +15,7 @@ export async function POST(request: Request) {
     const message = typeof body.message === 'string' ? body.message.trim() : '';
     const website = typeof body.website === 'string' ? body.website : '';
 
-    // Honeypot: gerçek kullanıcı bu gizli alanı doldurmaz, botlar doldurur.
-    // Başarılıymış gibi yanıt verip sessizce yok sayıyoruz.
+    // Honeypot: botlar bu gizli alanı doldurur, sessizce yok sayıyoruz.
     if (website) {
       return NextResponse.json({ success: true });
     }
@@ -40,9 +39,12 @@ export async function POST(request: Request) {
     const toEmail = process.env.CONTACT_TO_EMAIL;
 
     if (!apiKey || !toEmail) {
-      console.error('RESEND_API_KEY veya CONTACT_TO_EMAIL tanımlı değil.');
+      const missing = [!apiKey && 'RESEND_API_KEY', !toEmail && 'CONTACT_TO_EMAIL']
+        .filter(Boolean)
+        .join(', ');
+      console.error(`Eksik ortam degiskeni: ${missing}`);
       return NextResponse.json(
-        { error: 'Mesaj servisi şu anda yapılandırılmamış.' },
+        { error: `Yapılandırma eksik: ${missing}` },
         { status: 500 }
       );
     }
