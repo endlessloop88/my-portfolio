@@ -11,6 +11,7 @@ import MembershipForm from './components/MembershipForm';
 import CommentForm from './components/CommentForm';
 import ProjectModal from './components/ProjectModal';
 import BlogModal from './components/BlogModal';
+import BookingSection from './components/BookingSection';
 
 interface Project {
   title: string;
@@ -77,6 +78,7 @@ export default function Home() {
     { href: '#projects', label: 'Projeler' },
     { href: '#music', label: 'Müzik' },
     { href: '#blog', label: 'Blog' },
+    { href: '#booking', label: 'Ders Kaydı' },
     { href: '#membership', label: 'Üye Ol / Giriş' },
     { href: '#skills', label: 'Yetenekler' },
     { href: '#comments', label: 'İletişim' },
@@ -259,6 +261,11 @@ export default function Home() {
               </div>
             ))}
           </div>
+        </section>
+
+        {/* Bateri Dersi Kaydı */}
+        <section id="booking">
+          <BookingSection />
         </section>
 
         {/* Üyelik */}
