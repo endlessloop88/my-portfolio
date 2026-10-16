@@ -1,32 +1,46 @@
 'use client';
 
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { PlaySquare, Film, X, ExternalLink } from 'lucide-react';
 
-interface VideoItem {
+interface FeedVideo {
+  id: string;
   title: string;
-  category: string;
-  youtubeId: string;
-  description: string;
+  published: string;
 }
 
-const videosData: VideoItem[] = [
-  {
-    title: "Bateri Eğitimi & Teknik Performanslar",
-    category: "Müzik & Bateri Eğitimi",
-    youtubeId: "-erfGtx4Vi4",
-    description: "Baget seçimi, tuşe ve rezonans odaklı bateri eğitimi ders serisi ve teknik performans videoları."
-  },
-  {
-    title: "Spring Boot & E-Ticaret Entegrasyon Mimarisi",
-    category: "Yazılım & Proje",
-    youtubeId: "dQw4w9WgXcQ", // Kendi eklemek istediğin diğer video ID ile güncelleyebilirsin
-    description: "Trendyol, Hepsiburada ve Amazon API'leri ile arka planda çalışan senkronizasyon mekanizmaları."
-  }
-];
+const CHANNEL_URL = 'https://www.youtube.com/channel/UC0EiA0n-wC5u_q9J8mmD-ag';
+
+function formatDate(iso: string): string {
+  const date = new Date(iso);
+  if (Number.isNaN(date.getTime())) return '';
+  return date.toLocaleDateString('tr-TR', { day: 'numeric', month: 'long', year: 'numeric' });
+}
 
 export default function VideoSection() {
-  const [activeVideo, setActiveVideo] = useState<VideoItem | null>(null);
+  const [videos, setVideos] = useState<FeedVideo[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [activeVideo, setActiveVideo] = useState<FeedVideo | null>(null);
+
+  useEffect(() => {
+    let cancelled = false;
+
+    fetch('/api/videos')
+      .then((res) => res.json())
+      .then((data) => {
+        if (!cancelled) setVideos(Array.isArray(data.videos) ? data.videos : []);
+      })
+      .catch(() => {
+        if (!cancelled) setVideos([]);
+      })
+      .finally(() => {
+        if (!cancelled) setLoading(false);
+      });
+
+    return () => {
+      cancelled = true;
+    };
+  }, []);
 
   return (
     <div className="bg-slate-900/60 p-6 md:p-8 rounded-3xl border border-slate-800">
@@ -35,54 +49,73 @@ export default function VideoSection() {
           <h3 className="text-xl font-bold text-slate-100 flex items-center gap-2">
             <Film className="text-teal-400" size={24} /> Video Galerisi & Performanslar
           </h3>
-          <p className="text-xs text-slate-400 mt-1">Bateri eğitimi, teknik performans videoları ve yazılım projelerimden kesitler.</p>
+          <p className="text-xs text-slate-400 mt-1">
+            YouTube kanalımdaki en son videolar. Yeni yüklediklerim burada kendiliğinden görünür.
+          </p>
         </div>
-        <a 
-          href="https://www.youtube.com/playlist?list=PLbe6QwxW3yZh2zmiZynp31PnTULh7GotB" 
-          target="_blank" 
+        <a
+          href={CHANNEL_URL}
+          target="_blank"
           rel="noopener noreferrer"
           className="flex items-center gap-1.5 text-xs font-semibold bg-teal-500/10 hover:bg-teal-500/20 text-teal-400 px-4 py-2 rounded-xl border border-teal-500/30 transition"
         >
-          YouTube Oynatma Listesi <ExternalLink size={14} />
+          YouTube Kanalım <ExternalLink size={14} />
         </a>
       </div>
 
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-        {videosData.map((video, index) => (
-          <div 
-            key={index}
-            onClick={() => setActiveVideo(video)}
-            className="bg-slate-950 p-4 rounded-2xl border border-slate-800 hover:border-teal-500/50 transition cursor-pointer flex flex-col justify-between group"
-          >
-            <div className="space-y-3">
-              <div className="relative aspect-video w-full rounded-xl overflow-hidden bg-slate-900 border border-slate-800 flex items-center justify-center">
-                <div className="absolute inset-0 bg-gradient-to-t from-slate-950/80 via-transparent to-transparent z-10" />
-                <div className="absolute z-20 w-12 h-12 rounded-full bg-teal-500/90 text-slate-950 flex items-center justify-center shadow-lg group-hover:scale-110 transition">
-                  <PlaySquare size={24} />
+      {loading && <p className="text-sm text-slate-400">Videolar yükleniyor...</p>}
+
+      {!loading && videos.length === 0 && (
+        <p className="text-sm text-slate-400">
+          Videolar şu anda yüklenemedi. Tüm videolarımı YouTube kanalımdan izleyebilirsiniz.
+        </p>
+      )}
+
+      {videos.length > 0 && (
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+          {videos.map((video) => (
+            <button
+              key={video.id}
+              type="button"
+              onClick={() => setActiveVideo(video)}
+              className="text-left bg-slate-950 p-3 rounded-2xl border border-slate-800 hover:border-teal-500/50 transition group"
+            >
+              <div className="relative aspect-video w-full rounded-xl overflow-hidden bg-slate-900 border border-slate-800">
+                {/* eslint-disable-next-line @next/next/no-img-element */}
+                <img
+                  src={`https://i.ytimg.com/vi/${video.id}/hqdefault.jpg`}
+                  alt={video.title}
+                  loading="lazy"
+                  className="w-full h-full object-cover"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-slate-950/70 via-transparent to-transparent" />
+                <div className="absolute inset-0 flex items-center justify-center">
+                  <div className="w-12 h-12 rounded-full bg-teal-500/90 text-slate-950 flex items-center justify-center shadow-lg group-hover:scale-110 transition">
+                    <PlaySquare size={24} />
+                  </div>
                 </div>
-                <span className="absolute bottom-3 left-3 z-20 text-[11px] bg-slate-900/80 text-teal-400 px-2.5 py-1 rounded-full border border-teal-500/30">
-                  {video.category}
-                </span>
               </div>
-              
-              <h4 className="font-bold text-slate-200 group-hover:text-teal-400 transition">{video.title}</h4>
-              <p className="text-xs text-slate-400 leading-relaxed line-clamp-2">{video.description}</p>
-            </div>
-          </div>
-        ))}
-      </div>
+              <h4 className="mt-3 text-sm font-bold text-slate-200 group-hover:text-teal-400 transition line-clamp-2">
+                {video.title}
+              </h4>
+              {video.published && (
+                <p className="text-[11px] text-slate-500 mt-1">{formatDate(video.published)}</p>
+              )}
+            </button>
+          ))}
+        </div>
+      )}
 
       {activeVideo && (
         <div className="fixed inset-0 z-50 bg-slate-950/80 backdrop-blur-sm flex items-center justify-center p-4">
           <div className="bg-slate-900 border border-slate-800 w-full max-w-3xl rounded-3xl p-6 relative shadow-2xl space-y-4">
-            <div className="flex justify-between items-center border-b border-slate-800 pb-4">
-              <div>
-                <span className="text-[11px] text-teal-400 font-medium">{activeVideo.category}</span>
-                <h3 className="text-lg font-bold text-slate-100">{activeVideo.title}</h3>
-              </div>
-              <button 
+            <div className="flex justify-between items-start gap-4 border-b border-slate-800 pb-4">
+              <h3 className="text-lg font-bold text-slate-100">{activeVideo.title}</h3>
+              <button
+                type="button"
                 onClick={() => setActiveVideo(null)}
-                className="p-2 rounded-full bg-slate-800 hover:bg-slate-700 text-slate-300 transition"
+                className="p-2 rounded-full bg-slate-800 hover:bg-slate-700 text-slate-300 transition shrink-0"
+                aria-label="Kapat"
               >
                 <X size={18} />
               </button>
@@ -90,7 +123,7 @@ export default function VideoSection() {
 
             <div className="aspect-video w-full rounded-2xl overflow-hidden bg-slate-950 border border-slate-800">
               <iframe
-                src={`https://www.youtube.com/embed/${activeVideo.youtubeId}?autoplay=1`}
+                src={`https://www.youtube.com/embed/${activeVideo.id}?autoplay=1`}
                 title={activeVideo.title}
                 className="w-full h-full border-0"
                 allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
@@ -98,15 +131,14 @@ export default function VideoSection() {
               />
             </div>
 
-            <div className="flex justify-between items-center pt-2">
-              <p className="text-xs text-slate-400">{activeVideo.description}</p>
-              <a 
-                href="https://www.youtube.com/playlist?list=PLbe6QwxW3yZh2zmiZynp31PnTULh7GotB"
+            <div className="flex justify-end">
+              <a
+                href={CHANNEL_URL}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="text-xs text-teal-400 hover:underline flex items-center gap-1 font-medium"
               >
-                Tüm Listeyi İzle <ExternalLink size={12} />
+                Tüm videolar için kanalıma git <ExternalLink size={12} />
               </a>
             </div>
           </div>
