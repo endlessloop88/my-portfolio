@@ -11,10 +11,11 @@ import {
   AlertCircle,
   Info,
   Loader2,
+  Mail,
 } from 'lucide-react';
 import { supabase, isSupabaseConfigured } from '../lib/supabase';
 
-type Mode = 'signup' | 'login';
+type Mode = 'signup' | 'login' | 'forgot';
 type MessageType = 'error' | 'success' | 'info';
 
 const ADMIN_EMAIL = (process.env.NEXT_PUBLIC_ADMIN_EMAIL ?? '').toLowerCase();
@@ -23,6 +24,12 @@ function translateError(message: string): string {
   const m = message.toLowerCase();
   if (m.includes('already registered') || m.includes('already been registered')) {
     return 'Bu e-posta ile zaten bir üyelik var. Giriş yapmayı deneyin.';
+  }
+  if (m.includes('not authorized')) {
+    return 'E-posta servisi şu anda bu adrese gönderim yapamıyor. Lütfen daha sonra tekrar deneyin.';
+  }
+  if (m.includes('only request this after') || m.includes('for security purposes')) {
+    return 'Güvenlik nedeniyle yeni bir istek için yaklaşık bir dakika beklemeniz gerekiyor.';
   }
   if (m.includes('invalid login credentials')) return 'E-posta ya da şifre hatalı.';
   if (m.includes('email not confirmed')) {
@@ -82,6 +89,29 @@ export default function MembershipForm() {
     e.preventDefault();
     if (loading) return;
     setMessage(null);
+
+    if (mode === 'forgot') {
+      setLoading(true);
+      try {
+        const { error } = await supabase.auth.resetPasswordForEmail(email.trim(), {
+          redirectTo: `${window.location.origin}/sifre-sifirla`,
+        });
+        if (error) throw error;
+        // Adres kayıtlı olsun olmasın aynı mesaj gösterilir (hesap varlığı sızdırılmaz)
+        setMessage({
+          type: 'info',
+          text: 'Bu adres kayıtlıysa şifre sıfırlama bağlantısı gönderildi. Gelen kutunuzu ve spam klasörünü kontrol edin.',
+        });
+      } catch (err) {
+        setMessage({
+          type: 'error',
+          text: translateError(err instanceof Error ? err.message : ''),
+        });
+      } finally {
+        setLoading(false);
+      }
+      return;
+    }
 
     if (mode === 'signup') {
       if (password.length < 8) {
@@ -223,6 +253,12 @@ export default function MembershipForm() {
       </div>
 
       <form onSubmit={handleSubmit} className="space-y-4">
+        {mode === 'forgot' && (
+          <p className="text-xs text-slate-400 leading-relaxed">
+            Üyelikte kullandığınız e-posta adresini yazın, şifrenizi sıfırlamak için bir bağlantı gönderelim.
+          </p>
+        )}
+
         {mode === 'signup' && (
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             <div>
@@ -268,20 +304,34 @@ export default function MembershipForm() {
           />
         </div>
 
-        <div>
-          <label className={labelClass}>Şifreniz *</label>
-          <input
-            type="password"
-            required
-            minLength={mode === 'signup' ? 8 : undefined}
-            maxLength={72}
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-            className={inputClass}
-            placeholder={mode === 'signup' ? 'En az 8 karakter' : 'Şifreniz'}
-            autoComplete={mode === 'signup' ? 'new-password' : 'current-password'}
-          />
-        </div>
+        {mode !== 'forgot' && (
+          <div>
+            <label className={labelClass}>Şifreniz *</label>
+            <input
+              type="password"
+              required
+              minLength={mode === 'signup' ? 8 : undefined}
+              maxLength={72}
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              className={inputClass}
+              placeholder={mode === 'signup' ? 'En az 8 karakter' : 'Şifreniz'}
+              autoComplete={mode === 'signup' ? 'new-password' : 'current-password'}
+            />
+            {mode === 'login' && (
+              <button
+                type="button"
+                onClick={() => {
+                  setMode('forgot');
+                  setMessage(null);
+                }}
+                className="mt-2 text-xs text-teal-400 hover:underline"
+              >
+                Şifremi unuttum
+              </button>
+            )}
+          </div>
+        )}
 
         {mode === 'signup' && (
           <label className="flex items-start gap-2 text-xs text-slate-400 leading-relaxed cursor-pointer">
@@ -314,6 +364,10 @@ export default function MembershipForm() {
             <>
               <Loader2 size={16} className="animate-spin" /> İşleniyor...
             </>
+          ) : mode === 'forgot' ? (
+            <>
+              <Mail size={16} /> Sıfırlama Bağlantısı Gönder
+            </>
           ) : mode === 'signup' ? (
             <>
               <UserPlus size={16} /> Üye Ol
@@ -325,6 +379,19 @@ export default function MembershipForm() {
           )}
         </button>
       </form>
+
+      {mode === 'forgot' && (
+        <button
+          type="button"
+          onClick={() => {
+            setMode('login');
+            setMessage(null);
+          }}
+          className="mt-4 text-xs text-teal-400 hover:underline"
+        >
+          ← Girişe dön
+        </button>
+      )}
     </div>
   );
 }
