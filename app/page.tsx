@@ -1,7 +1,7 @@
 'use client';
 
 import { useState } from 'react';
-import { Link2, Mail, Phone, Code2 } from 'lucide-react';
+import { Link2, Mail, Phone, Code2, Download } from 'lucide-react';
 
 import MusicPadSection from './components/MusicPadSection';
 import VideoSection from './components/VideoSection';
@@ -106,18 +106,25 @@ export default function Home() {
         {/* Hero / Hakkımda */}
         <section id="about" className="space-y-4">
           <p className="text-xs font-mono text-teal-400">
-            Bilgisayar Mühendisi & Yazılım Geliştirici · 16 Şubat 1988 · İzmir, Türkiye
+            Bilgisayar Mühendisi & Yazılım Geliştirici · İzmir, Türkiye
           </p>
           <h1 className="text-3xl md:text-4xl font-extrabold">
             Sistemler, Mimariler ve Ölçeklenebilir Yazılımlar Geliştiriyorum.
           </h1>
           <p className="text-slate-400 leading-relaxed max-w-2xl">
-            2010 yılından bu yana Java teknolojileri ve e-ticaret sektöründe aktif olarak
-            çalışmaktayım. E-ticaret pazar yeri operasyonları ve arka yüz yazılım mimarileri
-            geliştirmemin yanı sıra, 23 yıllık profesyonel müzik hayatımı yazılım mühendisliği
-            kariyerimle eş zamanlı olarak başarıyla sürdürüyorum.
+            2010 yılından bu yana e-ticaret sektöründe, 2017 yılından bu yana da Java ve arka uç
+            yazılım geliştirme alanında çalışmaktayım. E-ticaret pazar yeri operasyonlarının yanı
+            sıra arka yüz yazılım mimarileri geliştiriyor, uzun yıllardır süren profesyonel müzik
+            hayatımı yazılım mühendisliği kariyerimle eş zamanlı olarak sürdürüyorum.
           </p>
           <div className="flex flex-wrap gap-3 pt-2">
+            <a
+              href="/Yunus-Ilgun-CV.pdf"
+              download
+              className="flex items-center gap-2 text-xs font-semibold bg-teal-500 hover:bg-teal-400 text-slate-950 px-4 py-2 rounded-xl transition"
+            >
+              <Download size={14} /> CV İndir (English)
+            </a>
             <a
               href="mailto:iletisim@yunusilgun.com"
               className="flex items-center gap-2 text-xs font-semibold bg-teal-500/10 hover:bg-teal-500/20 text-teal-400 px-4 py-2 rounded-xl border border-teal-500/30 transition"
@@ -151,15 +158,15 @@ export default function Home() {
               <span className="text-xs text-teal-400 font-medium">2010 - Günümüz</span>
               <h3 className="font-bold text-slate-100 mt-1">E-Ticaret Operasyonları & Yazılım</h3>
               <p className="text-sm text-slate-400 mt-1">
-                Trendyol, Hepsiburada, Amazon ve AliExpress gibi pazar yerlerinde 15 yıla yakın
-                mağaza operasyon yönetimi ve Java temelli entegrasyon çözümleri.
+                Trendyol, Hepsiburada, Amazon ve AliExpress gibi pazar yerlerinde 2010'dan bu yana
+                mağaza operasyon yönetimi; 2017'den itibaren Java temelli yazılım ve entegrasyon çözümleri.
               </p>
             </div>
             <div className="bg-slate-900/60 p-5 rounded-2xl border border-slate-800">
               <span className="text-xs text-teal-400 font-medium">Müzik Kariyeri</span>
               <h3 className="font-bold text-slate-100 mt-1">Profesyonel Bateri Eğitmeni & Müzisyen</h3>
               <p className="text-sm text-slate-400 mt-1">
-                23 yıllık sahne hayatı, profesyonel bateri icracılığı ve aktif özel ders eğitmenliği.
+                Uzun yıllara dayanan sahne hayatı, profesyonel bateri icracılığı ve aktif özel ders eğitmenliği.
               </p>
             </div>
           </div>
@@ -205,7 +212,7 @@ export default function Home() {
         <section id="music" className="space-y-6">
           <h2 className="text-xl font-bold text-slate-100">Müzik & Bateri Performansları</h2>
           <p className="text-xs text-slate-400 -mt-4">
-            23 yıllık sahne deneyimi, profesyonel bateri icracılığı ve özel ders eğitmenliği.
+            Uzun yıllara dayanan sahne deneyimi, profesyonel bateri icracılığı ve özel ders eğitmenliği.
           </p>
 
           <div className="bg-slate-900/60 p-6 rounded-3xl border border-slate-800">
