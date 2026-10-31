@@ -32,6 +32,16 @@ interface BlogPost {
 
 const projects: Project[] = [
   {
+    title: 'Annotation Quality API',
+    tag: 'Python & FastAPI',
+    description:
+      'Veri etiketleme görevlerini, gönderimleri ve değerlendirmeleri takip eden; onay ve düzeltme oranı gibi kalite metriklerini raporlayan REST API.',
+    fullDetails:
+      'FastAPI, SQLAlchemy ve PostgreSQL ile geliştirdim. Gönderim ve değerlendirme akışı bir durum makinesi olarak modellendi (kabul, düzeltme, ret): bir görev yalnızca düzeltme kararından sonra yeniden gönderilebilir, her gönderim bir kez değerlendirilir. Etiketleyici ve proje bazında onay oranı, düzeltme oranı ve ortalama puan SQL ile hesaplanır. pytest testleri, Docker ve GitHub Actions ile otomatik test (CI) içerir.',
+    techs: ['Python', 'FastAPI', 'PostgreSQL', 'Docker', 'pytest'],
+    githubUrl: 'https://github.com/endlessloop88/annotation-quality-api',
+  },
+  {
     title: 'Patent Ajanı',
     tag: 'Spring Boot & Java',
     description:
@@ -39,7 +49,7 @@ const projects: Project[] = [
     fullDetails:
       'Spring Boot kullanarak geliştirdiğim bu projede CRUD operasyonları, RESTful servisler ve dinamik arayüz entegrasyonu sağladım.',
     techs: ['Java', 'Spring Boot', 'HTML/CSS', 'H2 Database'],
-    githubUrl: 'https://github.com',
+    githubUrl: 'https://github.com/endlessloop88/patent-agent-backend',
   },
   {
     title: 'Kişisel Portfolyo & Blog',
@@ -49,7 +59,7 @@ const projects: Project[] = [
     fullDetails:
       'Bu sitenin kendisi: App Router, istemci bileşenleri, interaktif davul pedleri, blog ve üyelik sistemi içeren tam kapsamlı bir Next.js projesi.',
     techs: ['Next.js', 'TypeScript', 'Tailwind CSS'],
-    githubUrl: 'https://github.com',
+    githubUrl: 'https://github.com/endlessloop88/my-portfolio',
   },
 ];
 
@@ -126,7 +136,7 @@ export default function Home() {
               <Download size={14} /> CV İndir (English)
             </a>
             <a
-              href="mailto:iletisim@yunusilgun.com"
+              href="mailto:ilguny929@gmail.com"
               className="flex items-center gap-2 text-xs font-semibold bg-teal-500/10 hover:bg-teal-500/20 text-teal-400 px-4 py-2 rounded-xl border border-teal-500/30 transition"
             >
               <Mail size={14} /> E-Posta Gönder
@@ -315,7 +325,7 @@ export default function Home() {
           <p className="text-sm text-slate-400">Kıdemli Yazılım ve Bilgisayar Mühendisi</p>
           <div className="flex justify-center gap-6">
             <a
-              href="https://github.com"
+              href="https://github.com/endlessloop88"
               target="_blank"
               rel="noopener noreferrer"
               className="flex items-center gap-2 text-sm text-slate-400 hover:text-teal-400 transition"
@@ -323,7 +333,7 @@ export default function Home() {
               <Link2 size={16} /> GitHub
             </a>
             <a
-              href="https://linkedin.com"
+              href="https://www.linkedin.com/in/yunus-ilg%C3%BCn-299652212/"
               target="_blank"
               rel="noopener noreferrer"
               className="flex items-center gap-2 text-sm text-slate-400 hover:text-teal-400 transition"
@@ -331,7 +341,7 @@ export default function Home() {
               <Link2 size={16} /> LinkedIn
             </a>
             <a
-              href="https://instagram.com"
+              href="https://www.instagram.com/yunuss.ilgun/"
               target="_blank"
               rel="noopener noreferrer"
               className="flex items-center gap-2 text-sm text-slate-400 hover:text-teal-400 transition"
