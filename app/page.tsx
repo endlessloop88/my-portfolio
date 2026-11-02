@@ -7,6 +7,7 @@ import MusicPadSection from './components/MusicPadSection';
 import VideoSection from './components/VideoSection';
 import AlgorithmSection from './components/AlgorithmSection';
 import Metronome from './components/Metronome';
+import DrumCoach from './components/DrumCoach';
 import MembershipForm from './components/MembershipForm';
 import CommentForm from './components/CommentForm';
 import ProjectModal from './components/ProjectModal';
@@ -243,6 +244,8 @@ export default function Home() {
               </p>
             </div>
           </div>
+
+          <DrumCoach />
         </section>
 
         {/* Algoritma & Kod Çözümleri */}
