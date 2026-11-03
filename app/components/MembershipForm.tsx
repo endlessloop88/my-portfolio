@@ -378,6 +378,14 @@ export default function MembershipForm() {
             </>
           )}
         </button>
+
+        <p className="text-[11px] text-slate-500 leading-relaxed">
+          Kişisel verileriniz{' '}
+          <a href="/gizlilik" className="text-teal-400 hover:underline">
+            Aydınlatma Metni
+          </a>{' '}
+          kapsamında işlenir.
+        </p>
       </form>
 
       {mode === 'forgot' && (

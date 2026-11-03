@@ -113,6 +113,10 @@ export default function CoachPage() {
           Yunus İlgün ·{' '}
           <Link href="/" className="text-teal-400 hover:underline">
             yunusilgun.com
+          </Link>{' '}
+          ·{' '}
+          <Link href="/gizlilik" className="text-teal-400 hover:underline">
+            Gizlilik
           </Link>
         </footer>
       </div>

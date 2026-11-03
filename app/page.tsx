@@ -246,6 +246,13 @@ export default function Home() {
           </div>
 
           <DrumCoach />
+          <p className="text-xs text-slate-500">
+            Ritim Koçu&apos;nu{' '}
+            <a href="/coach" className="text-teal-400 hover:underline">
+              kendi sayfasında aç
+            </a>
+            , paylaşmak ve telefondan kullanmak için daha rahat.
+          </p>
         </section>
 
         {/* Algoritma & Kod Çözümleri */}
@@ -352,6 +359,14 @@ export default function Home() {
               <Link2 size={16} /> Instagram
             </a>
           </div>
+          <p className="text-xs text-slate-500">
+            <a
+              href="/gizlilik"
+              className="text-slate-400 underline underline-offset-4 hover:text-teal-400 transition"
+            >
+              Gizlilik Politikası ve KVKK Aydınlatma Metni
+            </a>
+          </p>
           <p className="text-xs text-slate-600">© 2026 Yunus İlgün. Tüm hakları saklıdır.</p>
           <p className="text-xs text-slate-600">Profesyonel Müzisyen & Eğitmen</p>
         </div>
