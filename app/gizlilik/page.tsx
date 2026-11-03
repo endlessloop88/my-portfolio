@@ -59,6 +59,16 @@ const ACTIVITIES: Activity[] = [
       'Google (YouTube). Bu sırada Google kendi gizlilik politikası ve çerez uygulamaları kapsamında veri işleyebilir.',
   },
   {
+    title: 'Reklamlar (Google AdSense)',
+    data: 'Ana sayfada reklam gösterilirse Google ve iş ortakları, çerezler ve benzeri teknolojilerle IP adresi, tarayıcı ve cihaz bilgisi ile sayfa kullanımınıza ilişkin verileri işleyebilir.',
+    purpose: 'Reklamların gösterilmesi, ölçülmesi ve kişiselleştirilmesi; geçersiz tıklamaların ve kötüye kullanımın önlenmesi.',
+    basis:
+      "Reklam çerezleri için onayınız aranır: Avrupa Ekonomik Alanı, Birleşik Krallık ve İsviçre'den ziyaret edenlere Google'ın onay mesajı gösterilir. Reklam kişiselleştirmeyi Google Reklam Ayarları'ndan kapatabilirsiniz.",
+    method:
+      'Ana sayfa yüklendiğinde tarayıcınız Google ile bağlantı kurar. Ritim Koçu, gizlilik, üyelik ve yönetim sayfalarında Google reklam betiği yüklenmez.',
+    recipients: "Google (AdSense) ve Google'ın reklam iş ortakları.",
+  },
+  {
     title: 'Barındırma ve güvenlik kayıtları',
     data: 'IP adresi, tarayıcı ve cihaz bilgisi, istek zamanı ve adresi gibi teknik kayıtlar.',
     purpose: 'Sitenin sunulması, hata ayıklama ve güvenliğin sağlanması.',
@@ -92,7 +102,7 @@ const TOC = [
 const SUMMARY = [
   'Üye olursanız ad, soyad, e-posta ve şifreniz (şifreli olarak) saklanır. İletişim formuna yazdıklarınız yalnızca e-posta ile iletilir, sitenin veritabanında tutulmaz.',
   'Ritim Koçu hiçbir kişisel veri toplamaz: vuruşlarınız yalnızca tarayıcınızda kalır, mikrofon kullanılmaz.',
-  'Verileriniz satılmaz ve reklam amacıyla kullanılmaz.',
+  "Verileriniz satılmaz. Ana sayfada Google AdSense reklamları gösterilebilir ve Google reklam çerezleri kullanabilir (Avrupa'dan gelen ziyaretçilerden önce onay istenir); Ritim Koçu ve diğer sayfalarda reklam betiği yüklenmez.",
   'Verileriniz Supabase, Vercel, Resend, Google ve Cal.com gibi hizmet sağlayıcılarda işlenir; bunların bir kısmının sunucuları yurt dışındadır.',
   'İstediğiniz zaman erişim, düzeltme veya silme talep edebilirsiniz (aşağıdaki hazır e-posta düğmesiyle).',
 ];
@@ -227,9 +237,32 @@ export default function PrivacyPage() {
 
         <Section id="cerezler" title="6. Çerezler ve tarayıcı depolama">
           <p>
-            Sitede reklam amaçlı çerez kullanılmaz. Üye olarak giriş yaptığınızda oturumunuzu sürdürmek için, ve tema
-            tercihi gibi ayarlarınızı hatırlamak için tarayıcınızın yerel depolaması kullanılabilir. YouTube
-            videolarını açtığınızda Google kendi çerezlerini kullanabilir.
+            Ana sayfada Google AdSense reklamları gösterilebilir; bu durumda Google ve iş ortakları reklam çerezleri
+            kullanabilir. Ritim Koçu, gizlilik, üyelik ve yönetim sayfalarında reklam çerezi kullanılmaz. Üye olarak
+            giriş yaptığınızda oturumunuzu sürdürmek için, ve tema tercihi gibi ayarlarınızı hatırlamak için
+            tarayıcınızın yerel depolaması kullanılabilir. YouTube videolarını açtığınızda Google kendi çerezlerini
+            kullanabilir.
+          </p>
+          <p>
+            Google&apos;ın reklam çerezlerini nasıl kullandığını{' '}
+            <a
+              href="https://policies.google.com/technologies/ads"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-teal-400 hover:underline"
+            >
+              buradan
+            </a>{' '}
+            öğrenebilir, reklam kişiselleştirmeyi{' '}
+            <a
+              href="https://adssettings.google.com"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-teal-400 hover:underline"
+            >
+              Google Reklam Ayarları
+            </a>
+            &apos;ndan yönetebilirsiniz.
           </p>
         </Section>
 
@@ -300,7 +333,12 @@ export default function PrivacyPage() {
                 memory and is cleared when you close the page. No microphone is used, and MIDI input is never sent
                 anywhere.
               </li>
-              <li>No advertising cookies are used.</li>
+              <li>
+                <strong>Ads:</strong> Google AdSense ads may be shown on the home page, and Google and its partners may
+                use advertising cookies there. Visitors from the EEA, UK and Switzerland are asked for consent through
+                Google&apos;s consent message. The Rhythm Coach, privacy, member and admin pages load no advertising
+                script.
+              </li>
             </ul>
             <p>
               Some of these providers run servers outside Turkey, so data may be transferred abroad. You can ask to

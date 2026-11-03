@@ -8,6 +8,7 @@ import VideoSection from './components/VideoSection';
 import AlgorithmSection from './components/AlgorithmSection';
 import Metronome from './components/Metronome';
 import DrumCoach from './components/DrumCoach';
+import AdSenseScript from './components/AdSenseScript';
 import MembershipForm from './components/MembershipForm';
 import CommentForm from './components/CommentForm';
 import ProjectModal from './components/ProjectModal';
@@ -97,6 +98,7 @@ export default function Home() {
 
   return (
     <main className="min-h-screen bg-slate-950 text-slate-100">
+      <AdSenseScript />
       {/* Nav Bar */}
       <nav className="sticky top-0 z-40 bg-slate-950/80 backdrop-blur-md border-b border-slate-800">
         <div className="max-w-5xl mx-auto px-4 py-4 flex items-center justify-between">

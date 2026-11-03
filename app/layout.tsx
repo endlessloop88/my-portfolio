@@ -6,6 +6,7 @@ import { Providers } from "./providers";
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
+  other: { 'google-adsense-account': 'ca-pub-6573289153467831' },
   title: "Yunus İlgün | Yazılım Mühendisi & Bilgisayar Mühendisi",
   description: "Kişisel portfolyo ve blog web sitesi",
 };
