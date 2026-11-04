@@ -1,7 +1,7 @@
 'use client';
 
 import { useState } from 'react';
-import { Link2, Mail, Phone, Code2, Download } from 'lucide-react';
+import { Link2, Mail, Phone, Download } from 'lucide-react';
 
 import MusicPadSection from './components/MusicPadSection';
 import VideoSection from './components/VideoSection';
@@ -9,6 +9,7 @@ import AlgorithmSection from './components/AlgorithmSection';
 import Metronome from './components/Metronome';
 import DrumCoach from './components/DrumCoach';
 import AdSenseScript from './components/AdSenseScript';
+import Logo from './components/Logo';
 import MembershipForm from './components/MembershipForm';
 import CommentForm from './components/CommentForm';
 import ProjectModal from './components/ProjectModal';
@@ -103,7 +104,7 @@ export default function Home() {
       <nav className="sticky top-0 z-40 bg-slate-950/80 backdrop-blur-md border-b border-slate-800">
         <div className="max-w-5xl mx-auto px-4 py-4 flex items-center justify-between">
           <span className="font-mono font-bold text-teal-400 flex items-center gap-2">
-            <Code2 size={18} /> YUNUS İLGÜN
+            <Logo size={28} className="rounded-lg ring-1 ring-slate-800" /> YUNUS İLGÜN
           </span>
           <div className="hidden md:flex gap-5 text-xs font-medium text-slate-400">
             {navLinks.map((link) => (
