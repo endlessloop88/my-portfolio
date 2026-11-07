@@ -160,8 +160,8 @@ export default function Home() {
           <div className="grid md:grid-cols-2 gap-4">
             <div className="bg-slate-900/60 p-5 rounded-2xl border border-slate-800">
               <span className="text-xs text-teal-400 font-medium">2026 - Planlanan</span>
-              <h3 className="font-bold text-slate-100 mt-1">Bilgisayar Mühendisliği Yüksek Lisans</h3>
-              <p className="text-sm text-slate-400 mt-1">Global College of America / Arizona State Board</p>
+              <h3 className="font-bold text-slate-100 mt-1">Yapay Zeka Yüksek Lisans (uzaktan)</h3>
+              <p className="text-sm text-slate-400 mt-1">Global College of America · Arizona lisanslı, uzaktan</p>
             </div>
             <div className="bg-slate-900/60 p-5 rounded-2xl border border-slate-800">
               <span className="text-xs text-teal-400 font-medium">Mezun</span>
