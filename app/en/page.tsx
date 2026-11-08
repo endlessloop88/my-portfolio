@@ -4,7 +4,7 @@ import { Download, Link2, Mail } from 'lucide-react';
 import JsonLd from '../components/JsonLd';
 import Logo from '../components/Logo';
 
-const SITE = 'https://yunusilgun.com';
+const SITE = 'https://www.yunusilgun.com';
 const GITHUB = 'https://github.com/endlessloop88';
 const LINKEDIN = 'https://www.linkedin.com/in/yunus-ilg%C3%BCn-299652212/';
 const EMAIL = 'ilguny929@gmail.com';
