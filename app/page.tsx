@@ -64,9 +64,65 @@ const projects: Project[] = [
     techs: ['Next.js', 'TypeScript', 'Tailwind CSS'],
     githubUrl: 'https://github.com/endlessloop88/my-portfolio',
   },
+  {
+    title: 'Ritim Koçu',
+    tag: 'Web Audio & Web MIDI',
+    description:
+      `Tık çalan ve her vuruşun vuruştan milisaniye cinsinden sapmasını ölçen zamanlama antrenörü. Klavye, dokunma ya da USB MIDI pad ile çalışır, telefona uygulama olarak yüklenebilir.`,
+    fullDetails:
+      `Tarayıcıda Web Audio saatine göre tıkı önceden planlar ve vuruşları bu saatle karşılaştırır. Puanlama ve istatistik ayrı bir modülde: vuruş sapması, ortalama eğilim (acele mi, geride mi) ve tutarlılık. Tıkın birkaç ölçü kesildiği sessiz ölçü modu ve gecikme düzeltmesi var. Hiçbir kişisel veri toplanmaz. Canlı hâli: yunusilgun.com/coach. Yapay zekâ destekli araçlarla yazdım; davranışı ben belirledim, Roland SPD-SX PRO ile gerçek donanımda çalıştırıp denedim.`,
+    techs: ['TypeScript', 'Web Audio API', 'Web MIDI', 'PWA'],
+    githubUrl: 'https://github.com/endlessloop88/my-portfolio',
+  },
+  {
+    title: 'avatar-builder',
+    tag: 'Python',
+    description:
+      `JSON dosyasından kişiselleştirilmiş SVG avatar üreten küçük bir Python projesi: doğrulama, yedek adlar ve birim testleri içerir.`,
+    fullDetails:
+      `python-avatars kütüphanesinin etrafına yapılandırma dosyası, anlaşılır hata mesajları, kütüphane sürümleri arasında yedek adlar ve 14 birim test ekledim. Yapılandırma mantığını kütüphane import'undan ayırdığım için testler ek paket kurmadan python -m unittest ile çalışır. MIT lisanslı. Yapay zekâ destekli araçlarla yazdım; yapıyı ben belirledim, çalıştırıp test ettim.`,
+    techs: ['Python', 'JSON', 'unittest'],
+    githubUrl: 'https://github.com/endlessloop88/avatar-builder',
+  },
 ];
 
 const blogPosts: BlogPost[] = [
+  {
+    title: 'Building a rhythm coach with Web Audio and Web MIDI',
+    date: '8 Kasım 2026',
+    readTime: '3 min read',
+    description:
+      `How a drummer built a browser tool that measures how far each hit lands from the beat, and what its numbers can and cannot tell you.`,
+    content: `I am a drummer and a developer, so I built a small coach that plays a click and shows how far each of my hits lands from the beat, in milliseconds.
+
+Timing: JavaScript timers are not precise enough for music. The coach checks the Web Audio clock every 25 milliseconds, schedules each click up to 0.1 seconds ahead, and compares every hit with that scheduled time instead of relying on setTimeout.
+
+Input: hits come from the keyboard, a touchscreen or a USB MIDI pad. Each one is timestamped when it arrives and compared with the nearest beat.
+
+Scoring: the scoring and statistics live in a small separate module. It reports the deviation of each hit, the average bias (do I rush or drag?) and consistency. There is also a silent-bars mode where the click drops out for a few bars and I have to hold the tempo myself.
+
+Limits: every device adds its own audio and input latency, so the numbers are approximate, and there is a latency correction slider for that. The 20, 40 and 70 millisecond thresholds are my own choice, not a standard.
+
+It collects no personal data, can be installed on a phone as an app, and you can try it at yunusilgun.com/coach.
+
+I wrote it with AI-assisted tooling. I defined the behaviour, then ran, reviewed and tested it on a Roland SPD-SX PRO.`,
+  },
+  {
+    title: 'A config-driven avatar generator in Python',
+    date: '8 Kasım 2026',
+    readTime: '2 min read',
+    description:
+      `A small Python project built around a JSON config, validation and unit tests.`,
+    content: `avatar-builder is a small Python project that builds a personalised SVG avatar from a JSON file. It sits on top of the python-avatars library.
+
+What I added around the library: a config file instead of code edits, validation with clear error messages, fallback names when a part does not exist in another library version, and 14 unit tests.
+
+The design choice I like most is keeping the config logic free of the library import. Those functions are plain Python, so the tests run with python -m unittest and need no extra packages or network.
+
+The avatar in the repository is a stylised cartoon of me, which I now use as my GitHub profile picture.
+
+It is a modest project, written with AI-assisted tooling. I chose the structure and the config format, then ran, reviewed and tested it myself. The code is MIT licensed: github.com/endlessloop88/avatar-builder`,
+  },
   {
     title: 'Java ve E-Ticaret Entegrasyonlarında Mimari Yaklaşımlar',
     date: '21 Eylül 2026',
@@ -95,6 +151,7 @@ export default function Home() {
     { href: '#membership', label: 'Üye Ol / Giriş' },
     { href: '#skills', label: 'Yetenekler' },
     { href: '#comments', label: 'İletişim' },
+    { href: '/en', label: 'EN' },
   ];
 
   return (
