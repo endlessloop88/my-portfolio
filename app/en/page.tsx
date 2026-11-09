@@ -49,6 +49,13 @@ const PROJECTS: Project[] = [
     links: [{ label: 'GitHub', href: `${GITHUB}/avatar-builder` }],
   },
   {
+    title: 'Annotation Review Agent',
+    summary:
+      'Small LLM agent that reviews data-labelling submissions against written guidelines. It calls tools (guideline search and annotator statistics) and its answer is validated in code: schema, mandatory citations that must come from retrieved sections, PII masking and bounded retries. Includes an offline rule-based demo and 42 unit tests. Experimental: lexical retrieval only, no MCP server or real-model evaluation yet. Written with AI-assisted tooling; structure and guardrails by me.',
+    stack: 'Python, LLM tool use, BM25, unittest',
+    links: [{ label: 'GitHub', href: `${GITHUB}/annotation-review-agent` }],
+  },
+  {
     title: 'Patent Agent',
     summary: 'Patent management and search system with a RESTful API and an H2 database.',
     stack: 'Java, Spring Boot, H2',

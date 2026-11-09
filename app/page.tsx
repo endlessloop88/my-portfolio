@@ -84,6 +84,16 @@ const projects: Project[] = [
     techs: ['Python', 'JSON', 'unittest'],
     githubUrl: 'https://github.com/endlessloop88/avatar-builder',
   },
+  {
+    title: 'Annotation Review Agent',
+    tag: 'LLM Ajanı (deneysel)',
+    description:
+      `Etiketleme gönderilerini yazılı yönergelere göre inceleyen küçük bir LLM ajanı: araç çağırma, yönerge arama (BM25), çıktı doğrulama ve çevrimdışı demo.`,
+    fullDetails:
+      `Deneysel bir proje: bir ajan döngüsü iki aracı (yönerge arama ve etiketleyici istatistikleri) çağırarak bir gönderiyi kabul, düzeltme ya da ret olarak değerlendirir. Çıktı kodla doğrulanır: şema, zorunlu kaynak gösterme, arama sonucunda görülmemiş bölümlere atıf yasağı, e-posta ve telefon maskeleme, geçersiz cevapta en fazla iki kez yeniden deneme. Sağlayıcıdan bağımsız bir LLM arayüzü, Anthropic adaptörü ve API anahtarı gerektirmeyen kural tabanlı bir demo var. 42 birim test ek paket olmadan çalışır. Henüz yok: embedding tabanlı arama, MCP sunucusu ve gerçek bir modelin doğruluğunu ölçen değerlendirme seti. Yapay zekâ destekli araçlarla yazdım; yapıyı ve güvenlik katmanlarını ben belirledim, çalıştırıp test ettim.`,
+    techs: ['Python', 'LLM tool use', 'BM25', 'unittest'],
+    githubUrl: 'https://github.com/endlessloop88/annotation-review-agent',
+  },
 ];
 
 const blogPosts: BlogPost[] = [
