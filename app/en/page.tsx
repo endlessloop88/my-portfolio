@@ -56,6 +56,13 @@ const PROJECTS: Project[] = [
     links: [{ label: 'GitHub', href: `${GITHUB}/annotation-review-agent` }],
   },
   {
+    title: 'Payments Kafka Demo',
+    summary:
+      'Small Spring Boot and Kafka demo built to learn event-driven basics: payment events keyed by account (3 partitions), a consumer group, an idempotent consumer (a duplicate event is applied once) and a dead-letter topic for failing events. 15 tests, including an end-to-end test on an embedded broker. Limits: in-memory state, no outbox or transactions, no schema registry. Written with AI-assisted tooling; scope and design by me.',
+    stack: 'Java, Spring Boot, Kafka, JUnit',
+    links: [{ label: 'GitHub', href: `${GITHUB}/payments-kafka-demo` }],
+  },
+  {
     title: 'Patent Agent',
     summary: 'Patent management and search system with a RESTful API and an H2 database.',
     stack: 'Java, Spring Boot, H2',

@@ -94,6 +94,16 @@ const projects: Project[] = [
     techs: ['Python', 'LLM tool use', 'BM25', 'unittest'],
     githubUrl: 'https://github.com/endlessloop88/annotation-review-agent',
   },
+  {
+    title: 'Payments Kafka Demo',
+    tag: 'Spring Boot & Kafka',
+    description:
+      `Ödeme olaylarını Kafka üzerinden işleyen küçük bir Spring Boot demosu: anahtarlı olaylar, consumer group, idempotent tüketici ve dead-letter topic.`,
+    fullDetails:
+      `Öğrenme amaçlı küçük bir proje. Bir REST isteği ödeme olayı üretip Kafka'ya yazar (anahtar hesap numarası, 3 partition), bir tüketici bakiyeyi günceller. Kafka en az bir kez teslim ettiği için aynı olay iki kez gelirse yalnızca bir kez uygulanır. Hatalı bir olay iki kez yeniden denenir, sonra dead-letter topic'ine gider. 15 test var; bunların biri gömülü bir Kafka broker'ı üzerinde uçtan uca çalışır, Docker gerekmez. Sınırlar: bakiye ve işlenmiş olay numaraları bellekte tutuluyor, outbox ya da işlem (transaction) yok, şema kaydı yok. Yapay zekâ destekli araçlarla yazdım; kapsamı ve tasarımı ben belirledim, çalıştırıp test ettim.`,
+    techs: ['Java', 'Spring Boot', 'Kafka', 'JUnit'],
+    githubUrl: 'https://github.com/endlessloop88/payments-kafka-demo',
+  },
 ];
 
 const blogPosts: BlogPost[] = [
