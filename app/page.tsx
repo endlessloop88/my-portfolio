@@ -215,6 +215,13 @@ export default function Home() {
               <Download size={14} /> CV İndir (Türkçe)
             </a>
             <a
+              href="/Yunus-Ilgun-CV.pdf"
+              download
+              className="flex items-center gap-2 text-xs font-semibold bg-teal-500 hover:bg-teal-400 text-slate-950 px-4 py-2 rounded-xl transition"
+            >
+              <Download size={14} /> CV (English)
+            </a>
+            <a
               href="mailto:ilguny929@gmail.com"
               className="flex items-center gap-2 text-xs font-semibold bg-teal-500/10 hover:bg-teal-500/20 text-teal-400 px-4 py-2 rounded-xl border border-teal-500/30 transition"
             >
