@@ -210,7 +210,7 @@ export default function Home() {
           </p>
           <div className="flex flex-wrap gap-3 pt-2">
             <a
-              href="/Yunus-Ilgun-CV.pdf"
+              href="/Yunus-Ilgun-CV-TR.pdf"
               download
               className="flex items-center gap-2 text-xs font-semibold bg-teal-500 hover:bg-teal-400 text-slate-950 px-4 py-2 rounded-xl transition"
             >
