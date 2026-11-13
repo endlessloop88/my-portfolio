@@ -6,7 +6,7 @@ import Logo from '../components/Logo';
 
 const SITE = 'https://www.yunusilgun.com';
 const GITHUB = 'https://github.com/endlessloop88';
-const LINKEDIN = 'https://www.linkedin.com/in/yunus-ilg%C3%BCn-299652212/';
+const LINKEDIN = 'https://www.linkedin.com/in/yunus-ilg%C3%BCn-2996522122/';
 const EMAIL = 'ilguny929@gmail.com';
 
 export const metadata: Metadata = {
@@ -60,7 +60,10 @@ const PROJECTS: Project[] = [
     summary:
       'Small Spring Boot and Kafka demo built to learn event-driven basics: payment events keyed by account (3 partitions), a consumer group, an idempotent consumer (a duplicate event is applied once) and a dead-letter topic for failing events. 15 tests, including an end-to-end test on an embedded broker. Limits: in-memory state, no outbox or transactions, no schema registry. Written with AI-assisted tooling; scope and design by me.',
     stack: 'Java, Spring Boot, Kafka, JUnit',
-    links: [{ label: 'GitHub', href: `${GITHUB}/payments-kafka-demo` }],
+    links: [
+      { label: 'Case study', href: '/en/projects/payments-kafka-demo' },
+      { label: 'GitHub', href: `${GITHUB}/payments-kafka-demo` },
+    ],
   },
   {
     title: 'Patent Agent',

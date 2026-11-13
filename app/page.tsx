@@ -423,7 +423,7 @@ export default function Home() {
               <Link2 size={16} /> GitHub
             </a>
             <a
-              href="https://www.linkedin.com/in/yunus-ilg%C3%BCn-299652212/"
+              href="https://www.linkedin.com/in/yunus-ilg%C3%BCn-2996522122/"
               target="_blank"
               rel="noopener noreferrer"
               className="flex items-center gap-2 text-sm text-slate-400 hover:text-teal-400 transition"
