@@ -247,8 +247,7 @@ export default function Home() {
               <span className="text-xs text-teal-400 font-medium">2010 - 2023</span>
               <h3 className="font-bold text-slate-100 mt-1">E-Ticaret Operasyonları & Yazılım</h3>
               <p className="text-sm text-slate-400 mt-1">
-                Trendyol, Hepsiburada, Amazon ve AliExpress gibi pazar yerlerinde 2010'dan bu yana
-                mağaza operasyon yönetimi; 2017'den itibaren Java temelli yazılım ve entegrasyon çözümleri.
+                Trendyol, Hepsiburada, Amazon ve AliExpress gibi pazar yerlerinde 2010 ile 2023 arasında mağaza operasyon yönetimi; 2017'den itibaren Java temelli yazılım ve entegrasyon çözümleri.
               </p>
             </div>
             <div className="bg-slate-900/60 p-5 rounded-2xl border border-slate-800">
@@ -421,7 +420,7 @@ export default function Home() {
               <Link2 size={16} /> GitHub
             </a>
             <a
-              href="https://www.linkedin.com/in/yunus-ilg%C3%BCn-2996522122/"
+              href="https://www.linkedin.com/in/yunus-ilg%C3%BCn-299652212/"
               target="_blank"
               rel="noopener noreferrer"
               className="flex items-center gap-2 text-sm text-slate-400 hover:text-teal-400 transition"

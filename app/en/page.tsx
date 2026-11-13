@@ -6,7 +6,7 @@ import Logo from '../components/Logo';
 
 const SITE = 'https://www.yunusilgun.com';
 const GITHUB = 'https://github.com/endlessloop88';
-const LINKEDIN = 'https://www.linkedin.com/in/yunus-ilg%C3%BCn-2996522122/';
+const LINKEDIN = 'https://www.linkedin.com/in/yunus-ilg%C3%BCn-299652212/';
 const EMAIL = 'ilguny929@gmail.com';
 
 export const metadata: Metadata = {
