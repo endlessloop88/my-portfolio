@@ -92,7 +92,7 @@ const EXPERIENCE: { period: string; title: string; text: string }[] = [
     text: 'Java mobile app development for about a year.',
   },
   {
-    period: '2010 - 2022',
+    period: '2010 - 2023',
     title: 'E-commerce',
     text: 'Marketplace operations (Trendyol, Hepsiburada, Amazon) and integration work.',
   },
@@ -127,8 +127,7 @@ export default function EnglishPage() {
           <p className="text-xs text-teal-400 font-medium">Backend developer · İzmir, Türkiye</p>
           <h1 className="text-3xl md:text-4xl font-extrabold text-slate-100">Python and Java backend developer</h1>
           <p className="text-slate-300 leading-relaxed">
-            I have worked in e-commerce operations since 2010 and in software since 2017, mostly on Java and Python
-            backends and marketplace integrations. I also work on AI data evaluation projects and I am a professional
+            I ran an e-commerce business from 2010 to 2023 and have worked in software since 2017, mostly on Java and Python backends and marketplace integrations. I also work on AI data evaluation projects and I am a professional
             drummer. I am open to backend engineering roles, including remote ones.
           </p>
           <div className="flex flex-wrap gap-3">

@@ -203,9 +203,7 @@ export default function Home() {
             Sistemler, Mimariler ve Ölçeklenebilir Yazılımlar Geliştiriyorum.
           </h1>
           <p className="text-slate-400 leading-relaxed max-w-2xl">
-            2010 yılından bu yana e-ticaret sektöründe, 2017 yılından bu yana da Java ve arka uç
-            yazılım geliştirme alanında çalışmaktayım. E-ticaret pazar yeri operasyonlarının yanı
-            sıra arka yüz yazılım mimarileri geliştiriyor, uzun yıllardır süren profesyonel müzik
+            2010 ile 2023 arasında e-ticaret sektöründe çalıştım ve işletme yönettim, 2017 yılından bu yana Java ve arka uç yazılım geliştirme alanında çalışıyorum. Arka uç yazılım mimarileri geliştiriyor, uzun yıllardır süren profesyonel müzik
             hayatımı yazılım mühendisliği kariyerimle eş zamanlı olarak sürdürüyorum.
           </p>
           <div className="flex flex-wrap gap-3 pt-2">
@@ -214,7 +212,7 @@ export default function Home() {
               download
               className="flex items-center gap-2 text-xs font-semibold bg-teal-500 hover:bg-teal-400 text-slate-950 px-4 py-2 rounded-xl transition"
             >
-              <Download size={14} /> CV İndir (English)
+              <Download size={14} /> CV İndir (Türkçe)
             </a>
             <a
               href="mailto:ilguny929@gmail.com"
@@ -246,7 +244,7 @@ export default function Home() {
               <p className="text-sm text-slate-400 mt-1">Uluslararası Dublin Üniversitesi</p>
             </div>
             <div className="bg-slate-900/60 p-5 rounded-2xl border border-slate-800">
-              <span className="text-xs text-teal-400 font-medium">2010 - Günümüz</span>
+              <span className="text-xs text-teal-400 font-medium">2010 - 2023</span>
               <h3 className="font-bold text-slate-100 mt-1">E-Ticaret Operasyonları & Yazılım</h3>
               <p className="text-sm text-slate-400 mt-1">
                 Trendyol, Hepsiburada, Amazon ve AliExpress gibi pazar yerlerinde 2010'dan bu yana
